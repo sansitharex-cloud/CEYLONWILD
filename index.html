@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceylon Wild | Official Site</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=600;800&family=Plus+Jakarta+Sans:wght=400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #23331b;
+            --secondary-brown: #4d3d28;
+            --accent-orange: #e68a00;
+            --bg-cream: #f7f4eb;
+            --card-light: #ffffff;
+            --text-main: #2b2b24;
+            --text-muted: #626259;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--primary-dark);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent-orange);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10001;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: #ffffff;
+            display: block;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #eae5db;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .btn-sep-nav {
+            background-color: var(--accent-orange);
+            color: white !important;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem !important;
+            display: inline-block;
+        }
+        
+        .btn-sep-nav:hover {
+            background-color: #cc7a00;
+        }
+
+        /* Full Screen Popups */
+        .page-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-cream);
+            z-index: 99999;
+            display: none;
+            overflow-y: auto;
+            padding: 100px 20px 40px 20px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            background-color: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 100000;
+        }
+
+        .modal-content {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        /* Main Components */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('Images/nilwella.jpg') no-repeat center center/cover;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 70px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 35px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .btn-premium {
+            background-color: var(--accent-orange);
+            color: white;
+            padding: 14px 40px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: 0.3s;
+            border: none;
+            display: inline-block;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(230, 138, 0, 0.4);
+        }
+
+        .btn-premium:hover {
+            background-color: #cc7a00;
+            transform: translateY(-2px);
+        }
+
+        .beyond-container {
+            max-width: 1140px;
+            margin: 80px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .beyond-text h2 {
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .beyond-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .beyond-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-brown);
+            color: white;
+            padding: 14px 30px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 4px;
+            transition: 0.3s;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* Full Frame එකට හැදූ කොටස */
+        .beyond-graphic-box {
+            background-color: #a3b899;
+            border-radius: 16px;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .beyond-graphic-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* පින්තූරය කොටුව පුරාම ලස්සනට පැතිරේ */
+        }
+
+        .promo-section {
+            background-color: var(--secondary-brown);
+            padding: 80px 20px;
+            color: white;
+        }
+
+        .section-title-light {
+            text-align: center;
+            font-size: 2.6rem;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+
+        .promo-grid {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .promo-card {
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .promo-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .promo-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .promo-content h3 {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .promo-content p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .escapes-section {
+            padding: 80px 20px;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .section-title-dark {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 60px;
+        }
+
+        .escape-row {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 40px;
+            background-color: var(--card-light);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+            align-items: center;
+        }
+
+        .escape-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .escape-info h3 {
+            font-size: 1.7rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .escape-info p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .why-bg {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('Images/seafish.jpg') no-repeat center center/cover;
+            padding: 100px 20px;
+            color: white;
+        }
+
+        .why-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .why-left h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+        }
+
+        .why-ul {
+            list-style: none;
+        }
+
+        .why-ul li {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .why-ul li::before {
+            content: "•";
+            color: var(--accent-orange);
+            font-size: 2rem;
+            position: absolute;
+            left: 0;
+            top: -10px;
+        }
+
+        .testimonial-box {
+            background-color: #fffaf0;
+            color: var(--text-main);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .info-note {
+            background-color: rgba(230, 138, 0, 0.1);
+            border-left: 4px solid var(--accent-orange);
+            padding: 15px;
+            font-size: 0.95rem;
+            color: var(--secondary-brown);
+            margin-bottom: 25px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .profile-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-top: 1px solid #ebdcc5;
+            padding-top: 20px;
+        }
+
+        .profile-img-dummy {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: var(--primary-dark);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .footer-banner {
+            background-color: var(--secondary-brown);
+            color: white;
+            padding: 80px 20px;
+        }
+
+        .footer-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .footer-img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .footer-info h2 {
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+        }
+
+        .contact-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .detail-block h4 {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-block p {
+            color: #f0e6da;
+            font-size: 1rem;
+            white-space: pre-line;
+        }
+
+        footer {
+            background-color: #172212;
+            color: #a4b39e;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Mobile Layout Adjustments */
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: var(--primary-dark);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 100px 30px;
+                gap: 20px;
+                transition: 0.4s ease-in-out;
+                box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+                width: 100%;
+            }
+
+            .beyond-container, .why-container, .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .beyond-buttons { justify-content: center; flex-direction: column; gap: 10px; }
+            .escape-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .contact-details-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav>
+        <div class="logo">Ceylon<span>Wild</span></div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="sidebarMenu">
+            <li><a href="#home" onclick="closeMenu()">Home</a></li>
+            <li><a href="#promos" onclick="closeMenu()">Combo Packs</a></li>
+            <li><a href="javascript:void(0)" class="btn-sep-nav" onclick="openPopupPage('promos-popup')">📄 Open Pack Only</a></li>
+            <li><a href="#escapes" onclick="closeMenu()">Escapes</a></li>
+            <li><a href="javascript:void(0)" class="btn-sep-nav" onclick="openPopupPage('escapes-popup')">📄 Open Escapes Only</a></li>
+            <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            <li><a href="javascript:void(0)" class="btn-sep-nav" onclick="openPopupPage('contact-popup')">📄 Open Contact Only</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Website View -->
+    <div id="home" class="hero">
+        <h1>Ceylon Wild</h1>
+        <p>Discover the Raw & Unfiltered Sri Lanka</p>
+        <a href="https://wa.me/94717200920" class="btn-premium">BOOK NOW</a>
+    </div>
+
+    <section class="beyond-container">
+        <div class="beyond-text">
+            <h2>Beyond the Beach</h2>
+            <p>Sri Lanka is more than just beautiful waves. At Ceylon Wild, we bring you closer to the island's true soul. We support local artisans and traditional craftsmen, giving you an exclusive glimpse into lives and skills passed down through generations. No filters, no tourist traps—just pure, raw Ceylon.</p>
+            <div class="beyond-buttons">
+                <button class="btn-premium" onclick="openPopupPage('promos-popup')">VIEW PACKS SEPARATE</button>
+                <button class="btn-secondary" onclick="openPopupPage('escapes-popup')">VIEW ESCAPES SEPARATE</button>
+            </div>
+        </div>
+        
+        <!-- Full Frame එකට හැදූ Graphic Box එක -->
+        <div class="beyond-graphic-box">
+            <img src="Images/ceylonwild.png" alt="Ceylon Wild Banner Logo">
+        </div>
+    </section>
+
+    <section id="promos" class="promo-section">
+        <h2 class="section-title-light">Combo Packages</h2>
+        <div class="promo-grid">
+            <div class="promo-card">
+                <img src="Images/cinnamon_1.jpg" class="promo-img" alt="Cinnamon Experience">
+                <div class="promo-content">
+                    <div>
+                        <h3>The Ultimate Southern Explorer</h3>
+                        <p>Cinnamon Experience + Stilt Fishing. Best of village crafts and coastal traditions in one day.</p>
+                    </div>
+                    <a href="https://wa.me/94717200920?text=Hi%20Dilshan,%20I%20want%20to%20book%20The%20Ultimate%20Southern%20Explorer" class="btn-premium" style="text-align:center;">BOOK NOW</a>
+                </div>
+            </div>
+            <div class="promo-card">
+                <img src="Images/coconutsea.jpg" class="promo-img" alt="Coastal View">
+                <div class="promo-content">
+                    <div>
+                        <h3>The Full 'Ceylon Wild' Pass</h3>
+                        <p>All 4 experiences tailored into a premium 2-day itinerary. Private Tuk-Tuk and local lunch included.</p>
+                    </div>
+                    <a href="https://wa.me/94717200920?text=Hi%20Dilshan,%20I%20want%20to%20book%20The%20Full%20Ceylon%20Wild%20Pass" class="btn-premium" style="text-align:center;">BOOK NOW</a>
+                </div>
+            </div>
+            <div class="promo-card">
+                <img src="Images/coconutra.jpg" class="promo-img" alt="Toddy Tapping">
+                <div class="promo-content">
+                    <div>
+                        <h3>The High-Tree Toddy Adventure</h3>
+                        <p>Coconut Toddy Tapping + Kithul & Jaggery Tour. A sweet and wild journey through Sri Lanka's palm traditions.</p>
+                    </div>
+                    <a href="https://wa.me/94717200920?text=Hi%20Dilshan,%20I%20want%20to%20book%20The%20High-Tree%20Toddy%20Adventure" class="btn-premium" style="text-align:center;">BOOK NOW</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="escapes" class="escapes-section">
+        <h2 class="section-title-dark">Our Handcrafted Local Escapes</h2>
+        
+        <div class="escape-row">
+            <img src="Images/cinnamon_2.jpg" class="escape-img" alt="Cinnamon Peeling">
+            <div class="escape-info">
+                <h3>The Cinnamon Artistry Experience</h3>
+                <p>Discover why Southern Sri Lanka produces the world's finest cinnamon. Walk into a local plantation, watch master craftsmen peel cinnamon with mind-blowing precision, and try your hand at crafting your own quill. Finish the tour with a fresh cup of pure cinnamon tea.</p>
+            </div>
+        </div>
+
+        <div class="escape-row">
+            <img src="Images/fisheries.png" class="escape-img" alt="Traditional Fishing">
+            <div class="escape-info">
+                <h3>Traditional Stilt Fishing Experience</h3>
+                <p>Witness one of Sri Lanka's most iconic and ancient fishing traditions. Meet local fishermen who balance on a slender wooden pole planted deep into the ocean bed. Climb up the stilt yourself, hold the traditional rod, and feel the thrill of catching fish the old-school way. Perfect for epic photos!</p>
+            </div>
+        </div>
+
+        <div class="escape-row">
+            <img src="Images/coconuttree.jpeg" class="escape-img" alt="Coconut Toddy Tapper">
+            <div class="escape-info">
+                <h3>Coconut Toddy Tapping Experience</h3>
+                <p>Watch daredevil "Toddy Tappers" walk on tightropes high up between coconut trees to harvest the sap. Learn the traditional process of fermenting this sap into "Toddy" (a local natural beverage). Sip a glass of fresh, sweet, unfermented palm juice right under the trees.</p>
+            </div>
+        </div>
+
+        <div class="escape-row">
+            <img src="Images/kithul.jpg" class="escape-img" alt="Jaggery Making">
+            <div class="escape-info">
+                <h3>Kithul Toddy & Jaggery Making Experience</h3>
+                <p>Step into a hidden village kitchen to see how pure Kithul sap is boiled down over a wood fire into sweet Kithul honey and solid "Jaggery" (local fudge). Taste the warm, fresh jaggery and sample traditional Kithul toddy while learning about this ancient jungle craft.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-bg">
+        <div class="why-container">
+            <div class="why-left">
+                <h2>Why choose<br>Ceylon wild?</h2>
+                <ul class="why-ul">
+                    <li><strong>100% Local:</strong> Your money goes directly to village families.</li>
+                    <li><strong>Real Vibes:</strong> No fake tourist traps. Authentic experiences only.</li>
+                    <li><strong>Hassle-Free:</strong> Tuk-Tuk transport included in every booking.</li>
+                </ul>
+            </div>
+            <div class="testimonial-box">
+                <div class="info-note">
+                    👕 <strong>Wear comfy outdoor clothes.</strong><br>
+                    🗣️ Our village masters only speak Sinhala, but we bridge the gap seamlessly using translation apps!
+                </div>
+                <div class="profile-meta">
+                    <div class="profile-img-dummy">DS</div>
+                    <div>
+                        <h4 style="font-weight:700; font-size:1.2rem; color:var(--primary-dark)">Dilshan Sansitha</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted)">Founder, Ceylon Wild</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="footer-banner">
+        <div class="footer-container">
+            <img src="Images/coconutsea.jpg" class="footer-img" alt="Contact Us Beach View">
+            <div class="footer-info">
+                <p style="color:var(--accent-orange); font-weight:700; text-transform:uppercase; margin-bottom:5px; letter-spacing:1px;">Ceylon wild</p>
+                <h2>Let's plan your next trip</h2>
+                
+                <div class="contact-details-grid">
+                    <div class="detail-block">
+                        <h4>📍 Address</h4>
+                        <p>99/A, Wehalla
+                           Dikwella
+                           Matara
+                           Srilanka</p>
+                    </div>
+                    <div class="detail-block">
+                        <h4>📞 Contact</h4>
+                        <p>Telephone: +94723200920
+                           Mobile: +94717200920
+                           Email: sansitharex@gmail.com</p>
+                    </div>
+                </div>
+                <div style="margin-top: 40px;">
+                    <a href="https://wa.me/94717200920" class="btn-premium">Chat on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ==================== POPUPS / OVERLAYS ==================== -->
+
+    <!-- POPUP 1: Combo Packs View Only -->
+    <div id="promos-popup" class="page-overlay">
+        <button class="close-btn" onclick="closePopupPage('promos-popup')">✕ CLOSE PAGE</button>
+        <div class="modal-content">
+            <h2 style="font-size: 2.5rem; color: var(--primary-dark); text-align: center; margin-bottom: 40px;">Combo Packages (Separate View)</h2>
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <img src="Images/cinnamon_1.jpg" class="promo-img" alt="Cinnamon Experience">
+                    <div class="promo-content">
+                        <div>
+                            <h3>The Ultimate Southern Explorer</h3>
+                            <p>Cinnamon Experience + Stilt Fishing. Best of village crafts and coastal traditions in one day.</p>
+                        </div>
+                        <a href="https://wa.me/94717200920?text=Hi%20Dilshan,%20I%20want%20to%20book%20The%20Ultimate%20Southern%20Explorer" class="btn-premium" style="text-align:center;">BOOK NOW</a>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <img src="Images/coconutsea.jpg" class="promo-img" alt="Coastal View">
+                    <div class="promo-content">
+                        <div>
+                            <h3>The Full 'Ceylon Wild' Pass</h3>
+                            <p>All 4 experiences tailored into a premium 2-day itinerary. Private Tuk-Tuk and local lunch included.</p>
+                        </div>
+                        <a href="https://wa.me/94717200920?text=Hi%20Dilshan,%20I%20want%20to%20book%20The%20Full%20Ceylon%20Wild%20Pass" class="btn-premium" style="text-align:center;">BOOK NOW</a>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <img src="Images/coconutra.jpg" class="promo-img" alt="Toddy Tapping">
+                    <div class="promo-content">
+                        <div>
+                            <h3>The High-Tree Toddy Adventure</h3>
+                            <p>Coconut Toddy Tapping + Kithul & Jaggery Tour. A sweet and wild journey through Sri Lanka's palm traditions.</p>
+                        </div>
+                        <a href="https://wa.me/94717200920?text=Hi%20Dilshan,%20I%20want%20to%20book%20The%20High-Tree%20Toddy%20Adventure" class="btn-premium" style="text-align:center;">BOOK NOW</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP 2: Handcrafted Escapes View Only -->
+    <div id="escapes-popup" class="page-overlay">
+        <button class="close-btn" onclick="closePopupPage('escapes-popup')">✕ CLOSE PAGE</button>
+        <div class="modal-content">
+            <h2 style="font-size: 2.5rem; color: var(--primary-dark); text-align: center; margin-bottom: 40px;">Handcrafted Local Escapes (Separate View)</h2>
+            
+            <div class="escape-row">
+                <img src="Images/cinnamon_2.jpg" class="escape-img" alt="Cinnamon Peeling">
+                <div class="escape-info">
+                    <h3>The Cinnamon Artistry Experience</h3>
+                    <p>Discover why Southern Sri Lanka produces the world's finest cinnamon. Walk into a local plantation, watch master craftsmen peel cinnamon with mind-blowing precision, and try your hand at crafting your own quill. Finish the tour with a fresh cup of pure cinnamon tea.</p>
+                </div>
+            </div>
+
+            <div class="escape-row">
+                <img src="Images/fisheries.png" class="escape-img" alt="Traditional Fishing">
+                <div class="escape-info">
+                    <h3>Traditional Stilt Fishing Experience</h3>
+                    <p>Witness one of Sri Lanka's most iconic and ancient fishing traditions. Meet local fishermen who balance on a slender wooden pole planted deep into the ocean bed. Climb up the stilt yourself, hold the traditional rod, and feel the thrill of catching fish the old-school way. Perfect for epic photos!</p>
+                </div>
+            </div>
+
+            <div class="escape-row">
+                <img src="Images/coconuttree.jpeg" class="escape-img" alt="Coconut Toddy Tapper">
+                <div class="escape-info">
+                    <h3>Coconut Toddy Tapping Experience</h3>
+                    <p>Watch daredevil "Toddy Tappers" walk on tightropes high up between coconut trees to harvest the sap. Learn the traditional process of fermenting this sap into "Toddy" (a local natural beverage). Sip a glass of fresh, sweet, unfermented palm juice right under the trees.</p>
+                </div>
+            </div>
+
+            <div class="escape-row">
+                <img src="Images/kithul.jpg" class="escape-img" alt="Jaggery Making">
+                <div class="escape-info">
+                    <h3>Kithul Toddy & Jaggery Making Experience</h3>
+                    <p>Step into a hidden village kitchen to see how pure Kithul sap is boiled down over a wood fire into sweet Kithul honey and solid "Jaggery" (local fudge). Taste the warm, fresh jaggery and sample traditional Kithul toddy while learning about this ancient jungle craft.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP 3: Contact View Only -->
+    <div id="contact-popup" class="page-overlay">
+        <button class="close-btn" onclick="closePopupPage('contact-popup')">✕ CLOSE PAGE</button>
+        <div class="modal-content" style="text-align: center;">
+            <h2 style="font-size: 2.8rem; color: var(--primary-dark); margin-bottom: 30px;">Direct Contact Desk</h2>
+            <div style="background: white; padding: 40px; border-radius: 12px; display: inline-block; max-width: 500px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                <h4 style="color:var(--accent-orange); margin-bottom: 10px;">📍 ADDRESS</h4>
+                <p style="margin-bottom: 25px;">99/A, Wehalla, Dikwella, Matara, Srilanka</p>
+                
+                <h4 style="color:var(--accent-orange); margin-bottom: 10px;">📞 CONTACT CHANNELS</h4>
+                <p style="margin-bottom: 5px;">Telephone: +94723200920</p>
+                <p style="margin-bottom: 5px;">Mobile: +94717200920</p>
+                <p style="margin-bottom: 25px;">Email: sansitharex@gmail.com</p>
+                
+                <a href="https://wa.me/94717200920" class="btn-premium" style="width: 100%; text-align: center;">CHAT ON WHATSAPP</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Ceylon Wild. Handcrafted with pride in Dikwella, Sri Lanka. All Rights Reserved.
+    </footer>
+
+    <!-- JavaScript Control Logic -->
+    <script>
+        let activePopupId = null;
+
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            document.getElementById('sidebarMenu').classList.toggle('active');
+        }
+        
+        function closeMenu() {
+            document.getElementById('sidebarMenu').classList.remove('active');
+        }
+
+        // Popup Open
+        function openPopupPage(pageId) {
+            activePopupId = pageId;
+            document.getElementById(pageId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            history.pushState({ isPopupActive: true, currentId: pageId }, "");
+            closeMenu();
+        }
+
+        // Popup Close
+        function closePopupPage(pageId) {
+            document.getElementById(pageId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+            activePopupId = null;
+        }
+
+        window.addEventListener('popstate', function(event) {
+            if (activePopupId) {
+                document.getElementById(activePopupId).style.display = 'none';
+                document.body.style.overflow = 'auto';
+                activePopupId = null;
+            }
+        });
+    </script>
+</body>
+</html>
